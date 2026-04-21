@@ -10,46 +10,50 @@ import com.quantity.model.QuantityLength;
 public class FeetTest {
 
     @Test
-    void testEquality_FeetToFeet_SameValue() {
-        QuantityLength q1 =
-                new QuantityLength(1.0, LengthUnit.FEET);
-
-        QuantityLength q2 =
-                new QuantityLength(1.0, LengthUnit.FEET);
-
-        assertTrue(q1.equals(q2));
+    void testFeetToFeet() {
+        assertTrue(
+            new QuantityLength(1, LengthUnit.FEET)
+            .equals(new QuantityLength(1, LengthUnit.FEET))
+        );
     }
 
     @Test
-    void testEquality_InchToInch_SameValue() {
-        QuantityLength q1 =
-                new QuantityLength(1.0, LengthUnit.INCHES);
-
-        QuantityLength q2 =
-                new QuantityLength(1.0, LengthUnit.INCHES);
-
-        assertTrue(q1.equals(q2));
+    void testFeetToInches() {
+        assertTrue(
+            new QuantityLength(1, LengthUnit.FEET)
+            .equals(new QuantityLength(12, LengthUnit.INCHES))
+        );
     }
 
     @Test
-    void testEquality_FeetToInch_Equivalent() {
-        QuantityLength q1 =
-                new QuantityLength(1.0, LengthUnit.FEET);
-
-        QuantityLength q2 =
-                new QuantityLength(12.0, LengthUnit.INCHES);
-
-        assertTrue(q1.equals(q2));
+    void testYardToFeet() {
+        assertTrue(
+            new QuantityLength(1, LengthUnit.YARDS)
+            .equals(new QuantityLength(3, LengthUnit.FEET))
+        );
     }
 
     @Test
-    void testEquality_DifferentValues() {
-        QuantityLength q1 =
-                new QuantityLength(1.0, LengthUnit.FEET);
+    void testYardToInches() {
+        assertTrue(
+            new QuantityLength(1, LengthUnit.YARDS)
+            .equals(new QuantityLength(36, LengthUnit.INCHES))
+        );
+    }
 
-        QuantityLength q2 =
-                new QuantityLength(2.0, LengthUnit.FEET);
+    @Test
+    void testCentimeterToInches() {
+        assertTrue(
+            new QuantityLength(1, LengthUnit.CENTIMETERS)
+            .equals(new QuantityLength(0.393701, LengthUnit.INCHES))
+        );
+    }
 
-        assertFalse(q1.equals(q2));
+    @Test
+    void testDifferentValues() {
+        assertFalse(
+            new QuantityLength(1, LengthUnit.YARDS)
+            .equals(new QuantityLength(2, LengthUnit.FEET))
+        );
     }
 }
