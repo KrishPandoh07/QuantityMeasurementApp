@@ -7,28 +7,28 @@ public class QuantityMeasurementApp {
 
     public static void main(String[] args) {
 
-        QuantityLength yard =
-                new QuantityLength(1.0, LengthUnit.YARDS);
+        System.out.println("1 Feet -> Inches : "
+                + QuantityLength.convert(
+                1.0,
+                LengthUnit.FEET,
+                LengthUnit.INCHES));
 
-        QuantityLength feet =
-                new QuantityLength(3.0, LengthUnit.FEET);
+        System.out.println("3 Yards -> Feet : "
+                + QuantityLength.convert(
+                3.0,
+                LengthUnit.YARDS,
+                LengthUnit.FEET));
 
-        QuantityLength inches =
-                new QuantityLength(36.0, LengthUnit.INCHES);
+        System.out.println("36 Inches -> Yards : "
+                + QuantityLength.convert(
+                36.0,
+                LengthUnit.INCHES,
+                LengthUnit.YARDS));
 
-        QuantityLength cm =
-                new QuantityLength(1.0, LengthUnit.CENTIMETERS);
-
-        QuantityLength inchValue =
-                new QuantityLength(0.393701, LengthUnit.INCHES);
-
-        System.out.println("1 Yard == 3 Feet : "
-                + yard.equals(feet));
-
-        System.out.println("1 Yard == 36 Inches : "
-                + yard.equals(inches));
-
-        System.out.println("1 CM == 0.393701 Inches : "
-                + cm.equals(inchValue));
+        System.out.println("1 CM -> Inches : "
+                + QuantityLength.convert(
+                1.0,
+                LengthUnit.CENTIMETERS,
+                LengthUnit.INCHES));
     }
 }

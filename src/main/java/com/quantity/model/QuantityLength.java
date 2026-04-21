@@ -14,17 +14,38 @@ public class QuantityLength {
         return value * unit.getConversionFactor();
     }
 
+    public static double convert(double value,
+                                 LengthUnit source,
+                                 LengthUnit target) {
+
+        if (!Double.isFinite(value) ||
+            source == null ||
+            target == null) {
+            throw new IllegalArgumentException("Invalid input");
+        }
+
+        double valueInFeet =
+                value * source.getConversionFactor();
+
+        return valueInFeet /
+                target.getConversionFactor();
+    }
+
     @Override
     public boolean equals(Object obj) {
 
         if (this == obj)
             return true;
 
-        if (obj == null || getClass() != obj.getClass())
+        if (obj == null ||
+            getClass() != obj.getClass())
             return false;
 
-        QuantityLength other = (QuantityLength) obj;
+        QuantityLength other =
+                (QuantityLength) obj;
 
-        return Double.compare(this.toFeet(), other.toFeet()) == 0;
+        return Double.compare(
+                this.toFeet(),
+                other.toFeet()) == 0;
     }
 }
