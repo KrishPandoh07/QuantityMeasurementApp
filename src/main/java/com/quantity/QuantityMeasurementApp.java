@@ -13,19 +13,23 @@ public class QuantityMeasurementApp {
         QuantityLength inches =
                 new QuantityLength(12.0, LengthUnit.INCHES);
 
-        QuantityLength yards =
-                new QuantityLength(1.0, LengthUnit.YARDS);
+        System.out.println("Feet Result : "
+                + feet.add(inches, LengthUnit.FEET));
 
-        System.out.println("1 Feet + 12 Inches = "
-                + feet.add(inches));
+        System.out.println("Inches Result : "
+                + feet.add(inches, LengthUnit.INCHES));
 
-        System.out.println("12 Inches + 1 Feet = "
-                + inches.add(feet));
+        System.out.println("Yards Result : "
+                + feet.add(inches, LengthUnit.YARDS));
 
-        System.out.println("1 Yard + 3 Feet = "
-                + yards.add(
+        System.out.println("CM Result : "
+                + new QuantityLength(
+                1.0,
+                LengthUnit.INCHES)
+                .add(
                 new QuantityLength(
-                        3.0,
-                        LengthUnit.FEET)));
+                        1.0,
+                        LengthUnit.INCHES),
+                LengthUnit.CENTIMETERS));
     }
 }

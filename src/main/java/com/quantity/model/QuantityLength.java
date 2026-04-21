@@ -40,18 +40,23 @@ public class QuantityLength {
     }
 
     public QuantityLength add(QuantityLength other) {
+        return add(other, this.unit);
+    }
 
-        if (other == null) {
-            throw new IllegalArgumentException("Null operand");
+    public QuantityLength add(QuantityLength other,
+                              LengthUnit targetUnit) {
+
+        if (other == null || targetUnit == null) {
+            throw new IllegalArgumentException("Invalid input");
         }
 
-        double sumInFeet =
+        double sumFeet =
                 this.toFeet() + other.toFeet();
 
-        double resultValue =
-                sumInFeet / this.unit.getConversionFactor();
+        double result =
+                sumFeet / targetUnit.getConversionFactor();
 
-        return new QuantityLength(resultValue, this.unit);
+        return new QuantityLength(result, targetUnit);
     }
 
     @Override
