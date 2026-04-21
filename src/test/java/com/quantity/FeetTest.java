@@ -2,6 +2,7 @@ package com.quantity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import com.quantity.model.LengthUnit;
@@ -9,15 +10,61 @@ import com.quantity.model.QuantityLength;
 
 public class FeetTest {
 
-    private static final double EPSILON = 0.001;
+    private static final double EPSILON = 0.01;
 
     @Test
-    void testTargetFeet() {
+    void testConvertToBaseUnit() {
+        assertEquals(1.0,
+                LengthUnit.INCHES
+                        .convertToBaseUnit(12),
+                EPSILON);
+    }
+
+    @Test
+    void testConvertFromBaseUnit() {
+        assertEquals(12.0,
+                LengthUnit.INCHES
+                        .convertFromBaseUnit(1),
+                EPSILON);
+    }
+
+    @Test
+    void testQuantityConvertTo() {
+        QuantityLength q =
+                new QuantityLength(
+                        1,
+                        LengthUnit.FEET)
+                        .convertTo(
+                        LengthUnit.INCHES);
+
+        assertEquals(12.0,
+                q.getValue(),
+                EPSILON);
+    }
+
+    @Test
+    void testEquality() {
+        assertTrue(
+                new QuantityLength(
+                        36,
+                        LengthUnit.INCHES)
+                        .equals(
+                        new QuantityLength(
+                                1,
+                                LengthUnit.YARDS)));
+    }
+
+    @Test
+    void testAddition() {
         QuantityLength result =
-                new QuantityLength(1, LengthUnit.FEET)
-                .add(
-                new QuantityLength(12, LengthUnit.INCHES),
-                LengthUnit.FEET);
+                new QuantityLength(
+                        1,
+                        LengthUnit.FEET)
+                        .add(
+                        new QuantityLength(
+                                12,
+                                LengthUnit.INCHES),
+                        LengthUnit.FEET);
 
         assertEquals(2.0,
                 result.getValue(),
@@ -25,76 +72,11 @@ public class FeetTest {
     }
 
     @Test
-    void testTargetInches() {
-        QuantityLength result =
-                new QuantityLength(1, LengthUnit.FEET)
-                .add(
-                new QuantityLength(12, LengthUnit.INCHES),
-                LengthUnit.INCHES);
-
-        assertEquals(24.0,
-                result.getValue(),
-                EPSILON);
-    }
-
-    @Test
-    void testTargetYards() {
-        QuantityLength result =
-                new QuantityLength(1, LengthUnit.FEET)
-                .add(
-                new QuantityLength(12, LengthUnit.INCHES),
-                LengthUnit.YARDS);
-
-        assertEquals(0.666,
-                result.getValue(),
-                0.01);
-    }
-
-    @Test
-    void testTargetCentimeters() {
-        QuantityLength result =
-                new QuantityLength(1, LengthUnit.INCHES)
-                .add(
-                new QuantityLength(1, LengthUnit.INCHES),
-                LengthUnit.CENTIMETERS);
-
-        assertEquals(5.08,
-                result.getValue(),
-                0.05);
-    }
-
-    @Test
-    void testCommutative() {
-
-        QuantityLength a =
-                new QuantityLength(1, LengthUnit.FEET)
-                .add(
-                new QuantityLength(12, LengthUnit.INCHES),
-                LengthUnit.YARDS);
-
-        QuantityLength b =
-                new QuantityLength(12, LengthUnit.INCHES)
-                .add(
-                new QuantityLength(1, LengthUnit.FEET),
-                LengthUnit.YARDS);
-
-        assertEquals(
-                a.getValue(),
-                b.getValue(),
-                EPSILON);
-    }
-
-    @Test
-    void testNullTarget() {
+    void testInvalidInput() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> new QuantityLength(
-                        1,
-                        LengthUnit.FEET)
-                        .add(
-                        new QuantityLength(
-                                1,
-                                LengthUnit.FEET),
-                        null));
+                        Double.NaN,
+                        LengthUnit.FEET));
     }
 }

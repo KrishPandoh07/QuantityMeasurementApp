@@ -6,6 +6,11 @@ public class QuantityLength {
     private final LengthUnit unit;
 
     public QuantityLength(double value, LengthUnit unit) {
+
+        if (!Double.isFinite(value) || unit == null) {
+            throw new IllegalArgumentException("Invalid input");
+        }
+
         this.value = value;
         this.unit = unit;
     }
@@ -19,7 +24,20 @@ public class QuantityLength {
     }
 
     private double toFeet() {
-        return value * unit.getConversionFactor();
+        return unit.convertToBaseUnit(value);
+    }
+
+    public QuantityLength convertTo(LengthUnit targetUnit) {
+
+        if (targetUnit == null) {
+            throw new IllegalArgumentException("Invalid unit");
+        }
+
+        double feetValue = toFeet();
+        double result =
+                targetUnit.convertFromBaseUnit(feetValue);
+
+        return new QuantityLength(result, targetUnit);
     }
 
     public static double convert(double value,
@@ -33,10 +51,9 @@ public class QuantityLength {
         }
 
         double feetValue =
-                value * source.getConversionFactor();
+                source.convertToBaseUnit(value);
 
-        return feetValue /
-                target.getConversionFactor();
+        return target.convertFromBaseUnit(feetValue);
     }
 
     public QuantityLength add(QuantityLength other) {
@@ -54,7 +71,7 @@ public class QuantityLength {
                 this.toFeet() + other.toFeet();
 
         double result =
-                sumFeet / targetUnit.getConversionFactor();
+                targetUnit.convertFromBaseUnit(sumFeet);
 
         return new QuantityLength(result, targetUnit);
     }
