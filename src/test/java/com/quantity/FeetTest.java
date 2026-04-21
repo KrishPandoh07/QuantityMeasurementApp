@@ -12,62 +12,66 @@ public class FeetTest {
     private static final double EPSILON = 0.0001;
 
     @Test
-    void testFeetToInches() {
-        assertEquals(12.0,
-                QuantityLength.convert(
-                        1.0,
-                        LengthUnit.FEET,
-                        LengthUnit.INCHES),
-                EPSILON);
-    }
+    void testFeetPlusFeet() {
+        QuantityLength result =
+                new QuantityLength(1, LengthUnit.FEET)
+                .add(new QuantityLength(2, LengthUnit.FEET));
 
-    @Test
-    void testInchesToFeet() {
-        assertEquals(2.0,
-                QuantityLength.convert(
-                        24.0,
-                        LengthUnit.INCHES,
-                        LengthUnit.FEET),
-                EPSILON);
-    }
-
-    @Test
-    void testYardsToFeet() {
         assertEquals(3.0,
-                QuantityLength.convert(
-                        1.0,
-                        LengthUnit.YARDS,
-                        LengthUnit.FEET),
+                result.getValue(),
                 EPSILON);
     }
 
     @Test
-    void testCentimeterToInches() {
-        assertEquals(0.393701,
-                QuantityLength.convert(
-                        1.0,
-                        LengthUnit.CENTIMETERS,
-                        LengthUnit.INCHES),
+    void testFeetPlusInches() {
+        QuantityLength result =
+                new QuantityLength(1, LengthUnit.FEET)
+                .add(new QuantityLength(12, LengthUnit.INCHES));
+
+        assertEquals(2.0,
+                result.getValue(),
                 EPSILON);
     }
 
     @Test
-    void testSameUnit() {
+    void testInchesPlusFeet() {
+        QuantityLength result =
+                new QuantityLength(12, LengthUnit.INCHES)
+                .add(new QuantityLength(1, LengthUnit.FEET));
+
+        assertEquals(24.0,
+                result.getValue(),
+                EPSILON);
+    }
+
+    @Test
+    void testYardPlusFeet() {
+        QuantityLength result =
+                new QuantityLength(1, LengthUnit.YARDS)
+                .add(new QuantityLength(3, LengthUnit.FEET));
+
+        assertEquals(2.0,
+                result.getValue(),
+                EPSILON);
+    }
+
+    @Test
+    void testWithZero() {
+        QuantityLength result =
+                new QuantityLength(5, LengthUnit.FEET)
+                .add(new QuantityLength(0, LengthUnit.INCHES));
+
         assertEquals(5.0,
-                QuantityLength.convert(
-                        5.0,
-                        LengthUnit.FEET,
-                        LengthUnit.FEET),
+                result.getValue(),
                 EPSILON);
     }
 
     @Test
-    void testInvalidInput() {
+    void testNullOperand() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> QuantityLength.convert(
-                        Double.NaN,
-                        LengthUnit.FEET,
-                        LengthUnit.INCHES));
+                () -> new QuantityLength(
+                        1,
+                        LengthUnit.FEET).add(null));
     }
 }
