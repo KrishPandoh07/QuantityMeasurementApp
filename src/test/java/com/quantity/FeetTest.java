@@ -4,41 +4,52 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
-import com.quantity.model.Feet;
-import com.quantity.model.Inches;
-import com.quantity.service.EqualityService;
+import com.quantity.model.LengthUnit;
+import com.quantity.model.QuantityLength;
 
 public class FeetTest {
 
     @Test
-    void testFeetEquality_SameValue() {
-        Feet f1 = new Feet(1.0);
-        Feet f2 = new Feet(1.0);
+    void testEquality_FeetToFeet_SameValue() {
+        QuantityLength q1 =
+                new QuantityLength(1.0, LengthUnit.FEET);
 
-        assertTrue(EqualityService.areEqual(f1, f2));
+        QuantityLength q2 =
+                new QuantityLength(1.0, LengthUnit.FEET);
+
+        assertTrue(q1.equals(q2));
     }
 
     @Test
-    void testFeetEquality_DifferentValue() {
-        Feet f1 = new Feet(1.0);
-        Feet f2 = new Feet(2.0);
+    void testEquality_InchToInch_SameValue() {
+        QuantityLength q1 =
+                new QuantityLength(1.0, LengthUnit.INCHES);
 
-        assertFalse(EqualityService.areEqual(f1, f2));
+        QuantityLength q2 =
+                new QuantityLength(1.0, LengthUnit.INCHES);
+
+        assertTrue(q1.equals(q2));
     }
 
     @Test
-    void testInchesEquality_SameValue() {
-        Inches i1 = new Inches(1.0);
-        Inches i2 = new Inches(1.0);
+    void testEquality_FeetToInch_Equivalent() {
+        QuantityLength q1 =
+                new QuantityLength(1.0, LengthUnit.FEET);
 
-        assertTrue(EqualityService.areEqual(i1, i2));
+        QuantityLength q2 =
+                new QuantityLength(12.0, LengthUnit.INCHES);
+
+        assertTrue(q1.equals(q2));
     }
 
     @Test
-    void testInchesEquality_DifferentValue() {
-        Inches i1 = new Inches(1.0);
-        Inches i2 = new Inches(2.0);
+    void testEquality_DifferentValues() {
+        QuantityLength q1 =
+                new QuantityLength(1.0, LengthUnit.FEET);
 
-        assertFalse(EqualityService.areEqual(i1, i2));
+        QuantityLength q2 =
+                new QuantityLength(2.0, LengthUnit.FEET);
+
+        assertFalse(q1.equals(q2));
     }
 }
